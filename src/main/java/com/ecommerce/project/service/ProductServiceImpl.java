@@ -113,7 +113,7 @@ public class ProductServiceImpl implements ProductService{
         Page<Product> productPage = productRepository.findByCategoryOrderByPriceAsc(category, pageDetails);
         List<Product> productList = productPage.getContent();
         if(productList.isEmpty()){
-            throw new APIException("No categories Found!");
+            throw new APIException(category.getCategoryName() + " category does not have any products");
         }
         List<ProductDTO> productDTOList = productList.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
@@ -139,7 +139,7 @@ public class ProductServiceImpl implements ProductService{
         List<Product> productList = productPage.getContent();
 
         if(productList.isEmpty()){
-            throw new APIException("No categories Found!");
+            throw new APIException("Products not found with keyword: " + keyword);
         }
 
         List<ProductDTO> productDTOList = productList.stream()
